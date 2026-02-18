@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
+import 'pages/detail_page.dart';
+import 'pages/categories_page.dart';
+import 'pages/about_page.dart';
 
 void main() {
   runApp(const NewsApp());
@@ -18,13 +21,22 @@ class NewsApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      // Set HomePage as the initial route
-      home: const HomePage(),
-      // Optional: Define named routes for cleaner navigation
+      initialRoute: '/',
       routes: {
-        '/home': (context) => const HomePage(),
+        '/': (context) => const HomePage(),
         '/categories': (context) => const CategoriesPage(),
         '/about': (context) => const AboutPage(),
+      },
+      // Handle named routes with arguments
+      onGenerateRoute: (settings) {
+        if (settings.name == '/detail') {
+          final article = settings.arguments;
+          return MaterialPageRoute(
+            builder: (context) => DetailPage(),
+            settings: RouteSettings(arguments: article),
+          );
+        }
+        return null;
       },
     );
   }
